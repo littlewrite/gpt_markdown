@@ -352,7 +352,7 @@ This document was created to test the robustness of Markdown parsers and to ensu
                     : Theme.of(context)
                         .colorScheme
                         .onSurface
-                        .withValues(alpha: 0.38),
+                        .withOpacity(0.38),
               ),
             ),
             IconButton(
@@ -368,7 +368,7 @@ This document was created to test the robustness of Markdown parsers and to ensu
                     : Theme.of(context)
                         .colorScheme
                         .onSurface
-                        .withValues(alpha: 0.38),
+                        .withOpacity(0.38),
               ),
             ),
             IconButton(
@@ -469,7 +469,7 @@ This document was created to test the robustness of Markdown parsers and to ensu
                                               color: Theme.of(context)
                                                   .colorScheme
                                                   .secondary
-                                                  .withValues(alpha: 0.5),
+                                                  .withOpacity(0.5),
                                               width: 1,
                                             ),
                                           ),

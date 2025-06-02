@@ -192,7 +192,7 @@ class _RenderSelectableAdapter extends RenderProxyBox
         _start = _end = null;
       case SelectionEventType.selectAll:
       case SelectionEventType.selectWord:
-      case SelectionEventType.selectParagraph:
+      // case SelectionEventType.selectParagraph:
         _start = Offset.zero;
         _end = Offset.infinite;
       case SelectionEventType.granularlyExtendSelection:
@@ -290,13 +290,13 @@ class _RenderSelectableAdapter extends RenderProxyBox
     return value.hasSelection ? SelectedContent(plainText: selectedText) : null;
   }
 
-  @override
-  SelectedContentRange? getSelection() {
-    if (!value.hasSelection) {
-      return null;
-    }
-    return const SelectedContentRange(startOffset: 0, endOffset: 1);
-  }
+  // @override
+  // SelectedContentRange? getSelection() {
+  //   if (!value.hasSelection) {
+  //     return null;
+  //   }
+  //   return const SelectedContentRange(startOffset: 0, endOffset: 1);
+  // }
 
   @override
   int get contentLength => 1;
