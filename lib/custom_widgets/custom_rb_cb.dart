@@ -36,11 +36,11 @@ class CustomRb extends StatelessWidget {
                   start: spacing,
                   end: spacing,
                 ),
-                child: Radio(
+                child: Radio<bool>( // TODO 兼容性调整
                   value: value,
                   groupValue: true,
+                  onChanged: (bool? newValue) {},
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) {},
                 ),
               ),
             ),
