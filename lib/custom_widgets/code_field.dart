@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,6 +25,7 @@ class CodeField extends StatefulWidget {
 
 class _CodeFieldState extends State<CodeField> {
   bool _copied = false;
+  bool _isScrollable = false;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -69,16 +71,40 @@ class _CodeFieldState extends State<CodeField> {
             ],
           ),
           const Divider(height: 1),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.all(16),
-            child: SelectableText(
-              widget.codes,
-              style: TextStyle(
-                fontFamily: 'JetBrainsMono',
-                package: "gpt_markdown",
-              ),
-            ),
+          Listener(
+            onPointerDown: (event) {
+              if (event.kind == PointerDeviceKind.mouse) {
+                setState(() {
+                  _isScrollable = false;
+                });
+              } else if (event.kind == PointerDeviceKind.touch) {
+                setState(() {
+                  _isScrollable = true;
+                });
+              }
+            },
+            child: _isScrollable
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      widget.codes,
+                      style: TextStyle(
+                        fontFamily: 'JetBrainsMono',
+                        package: "gpt_markdown",
+                      ),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      widget.codes,
+                      style: TextStyle(
+                        fontFamily: 'JetBrainsMono',
+                        package: "gpt_markdown",
+                      ),
+                    ),
+                  ),
           ),
         ],
       ),
