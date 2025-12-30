@@ -72,7 +72,7 @@ class _CodeFieldState extends State<CodeField> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.all(16),
-            child: Text(
+            child: SelectableText(
               widget.codes,
               style: TextStyle(
                 fontFamily: 'JetBrainsMono',
