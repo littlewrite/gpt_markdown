@@ -68,8 +68,8 @@ class _RenderSelectableAdapter extends RenderProxyBox
     Color selectionColor,
     SelectionRegistrar registrar,
     this.selectedText,
-  ) : _selectionColor = selectionColor,
-      _geometry = ValueNotifier<SelectionGeometry>(_noSelection) {
+  )   : _selectionColor = selectionColor,
+        _geometry = ValueNotifier<SelectionGeometry>(_noSelection) {
     this.registrar = registrar;
     _geometry.addListener(markNeedsPaint);
   }
@@ -192,7 +192,6 @@ class _RenderSelectableAdapter extends RenderProxyBox
         _start = _end = null;
       case SelectionEventType.selectAll:
       case SelectionEventType.selectWord:
-      // case SelectionEventType.selectParagraph:
         _start = Offset.zero;
         _end = Offset.infinite;
       case SelectionEventType.granularlyExtendSelection:
@@ -212,18 +211,16 @@ class _RenderSelectableAdapter extends RenderProxyBox
             extendSelectionEvent.forward ? Offset.infinite : Offset.zero;
         if (extendSelectionEvent.isEnd) {
           if (newOffset == _end) {
-            result =
-                extendSelectionEvent.forward
-                    ? SelectionResult.next
-                    : SelectionResult.previous;
+            result = extendSelectionEvent.forward
+                ? SelectionResult.next
+                : SelectionResult.previous;
           }
           _end = newOffset;
         } else {
           if (newOffset == _start) {
-            result =
-                extendSelectionEvent.forward
-                    ? SelectionResult.next
-                    : SelectionResult.previous;
+            result = extendSelectionEvent.forward
+                ? SelectionResult.next
+                : SelectionResult.previous;
           }
           _start = newOffset;
         }
@@ -278,6 +275,14 @@ class _RenderSelectableAdapter extends RenderProxyBox
           }
           _start = newOffset;
         }
+      // Flutter 3.27+ added SelectionEventType.selectParagraph to the enum.
+      // We can't reference it directly because the symbol doesn't exist on
+      // older Flutter versions (e.g. 3.22). Using a default: case instead
+      // keeps the switch exhaustive on all versions. For this simple widget,
+      // paragraph selection is equivalent to selectAll/selectWord.
+      default:
+        _start = Offset.zero;
+        _end = Offset.infinite;
     }
     _updateGeometry();
     return result;
@@ -298,7 +303,6 @@ class _RenderSelectableAdapter extends RenderProxyBox
   //   return const SelectedContentRange(startOffset: 0, endOffset: 1);
   // }
 
-  @override
   int get contentLength => 1;
 
   LayerLink? _startHandle;
@@ -321,10 +325,9 @@ class _RenderSelectableAdapter extends RenderProxyBox
       return;
     }
     // Draw the selection highlight.
-    final Paint selectionPaint =
-        Paint()
-          ..style = PaintingStyle.fill
-          ..color = _selectionColor;
+    final Paint selectionPaint = Paint()
+      ..style = PaintingStyle.fill
+      ..color = _selectionColor;
     context.canvas.drawRect(
       _getSelectionHighlightRect().shift(offset),
       selectionPaint,
