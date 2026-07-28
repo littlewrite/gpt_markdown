@@ -1,3 +1,7 @@
+## 1.1.8
+
+* 🔗 Fixed consecutive links separated by single newlines not rendering ([#142](https://github.com/Infinitix-LLC/gpt_markdown/issues/142)).
+
 ## 1.1.7
 
 * Added/updated the interactive playground and pub.dev example flow, with `playground.dart` as a dedicated playground entry and improved demo content for links, lists, blockquotes, tables, and LaTeX.

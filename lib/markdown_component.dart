@@ -783,7 +783,7 @@ class SourceTag extends InlineMd {
 /// Link text component
 class ATagMd extends InlineMd {
   @override
-  RegExp get exp => RegExp(r"(?<!\!)\[.*\]\([^\s]*\)");
+  RegExp get exp => RegExp(r"(?<!\!)\[.*?\]\([^\s]*\)");
 
   @override
   InlineSpan span(

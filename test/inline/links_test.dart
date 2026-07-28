@@ -45,6 +45,19 @@ void main() {
       expect(output, contains('LINK'));
     });
 
+    testWidgets('consecutive links on single-newline lines', (tester) async {
+      await pumpMarkdown(
+        tester,
+        '[A](https://example.com)\n'
+        '[B](https://example.com)\n'
+        '[C](https://example.com)',
+      );
+      final output = getSerializedOutput(tester);
+      expect(output, contains('A'));
+      expect(output, contains('B'));
+      expect(output, contains('C'));
+    });
+
     testWidgets('broken link syntax treated as plain text', (tester) async {
       await pumpMarkdown(tester, '[broken link(https://example.com)');
       final output = getSerializedOutput(tester);
