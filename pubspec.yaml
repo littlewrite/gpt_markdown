@@ -16,8 +16,7 @@ dependencies:
   flutter_math_fork:
     git:
       url: git@github.com:littlewrite/flutter_math.git
-      ref: feat_more_paltform
-
+      ref: feat_up_ver
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -35,4 +34,3 @@ topics:
   - selectable
   - chatgpt
   - gemini
-

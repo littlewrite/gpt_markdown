@@ -192,6 +192,7 @@ class _RenderSelectableAdapter extends RenderProxyBox
         _start = _end = null;
       case SelectionEventType.selectAll:
       case SelectionEventType.selectWord:
+      case SelectionEventType.selectParagraph:
         _start = Offset.zero;
         _end = Offset.infinite;
       case SelectionEventType.granularlyExtendSelection:
@@ -275,14 +276,6 @@ class _RenderSelectableAdapter extends RenderProxyBox
           }
           _start = newOffset;
         }
-      // Flutter 3.27+ added SelectionEventType.selectParagraph to the enum.
-      // We can't reference it directly because the symbol doesn't exist on
-      // older Flutter versions (e.g. 3.22). Using a default: case instead
-      // keeps the switch exhaustive on all versions. For this simple widget,
-      // paragraph selection is equivalent to selectAll/selectWord.
-      default:
-        _start = Offset.zero;
-        _end = Offset.infinite;
     }
     _updateGeometry();
     return result;
@@ -295,15 +288,19 @@ class _RenderSelectableAdapter extends RenderProxyBox
     return value.hasSelection ? SelectedContent(plainText: selectedText) : null;
   }
 
-  // @override
-  // SelectedContentRange? getSelection() {
-  //   if (!value.hasSelection) {
-  //     return null;
-  //   }
-  //   return const SelectedContentRange(startOffset: 0, endOffset: 1);
-  // }
+  @override
+  SelectedContentRange? getSelection() {
+    if (!value.hasSelection) {
+      return null;
+    }
+    // Selection is all-or-nothing for this widget, so the range always covers
+    // the whole content. contentLength must match the plain text returned by
+    // getSelectedContent, otherwise SelectionRegion range arithmetic is wrong.
+    return SelectedContentRange(startOffset: 0, endOffset: contentLength);
+  }
 
-  int get contentLength => 1;
+  @override
+  int get contentLength => selectedText.length;
 
   LayerLink? _startHandle;
   LayerLink? _endHandle;

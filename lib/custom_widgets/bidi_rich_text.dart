@@ -182,10 +182,12 @@ class RenderBidiParagraph extends RenderParagraph {
   List<PlaceholderDimensions> layoutInlineChildren(
     double maxWidth,
     ChildLayouter layoutChild,
+    ChildBaselineGetter getChildBaseline,
   ) {
     final dimensions = super.layoutInlineChildren(
       maxWidth,
       layoutChild,
+      getChildBaseline,
     );
     // Dry passes only measure. Permuting placeholders within a line never
     // changes the line's total width, so the dry size is the same either way,
